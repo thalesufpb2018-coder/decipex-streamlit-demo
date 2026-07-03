@@ -5,6 +5,14 @@ st.set_page_config(page_title="Painel DECIPEX (demo)", page_icon="🏛️", layo
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
+# Contas da demo, guardadas só nesta sessão do navegador (sem banco de dados de verdade).
+# É aqui que login.py busca pra conferir a senha, e usuarios.py adiciona novas contas.
+if "contas" not in st.session_state:
+    st.session_state.contas = {
+        "gestor@demo.com": {"nome": "Gestor Demo", "senha": "demo123", "tipo": "gestor"},
+        "colaborador@demo.com": {"nome": "Colaborador Demo", "senha": "demo123", "tipo": "colaborador"},
+    }
+
 
 def logout():
     st.session_state.logged_in = False
@@ -30,6 +38,6 @@ else:
         if st.button("Sair", width="stretch"):
             logout()
 
-    pg = st.navigation(paginas)
+    pg = st.navigation(paginas, position="top")
 
 pg.run()
